@@ -1,0 +1,42 @@
+<p><strong>{$CHOOSE_YOUR_OPTION}</strong></p>
+<div class="highlightbox checkoutborder cf">
+	<ul style="-webkit-column-count: 3;-moz-column-count: 3;column-count: 3;">
+      {foreach name=shipping_list item=liste from=$modul_list}
+    	<li><a href="{$liste.LINK}">{$liste.NAME}</a></li>
+      {/foreach}
+	</ul>
+</div>
+<br />
+
+{if $MODUL_ACTIVE}
+{foreach name=shipping item=modul from=$shipping_modules}
+<a name="{$modul.SHIPPING_NAME}" id="{$modul.SHIPPING_LINK}"></a><br />
+  <h4 style="text-transform:none;">{$modul.SHIPPING_NAME}{$modul.SHIPPING_TOP_LINK}</h4>
+	{if $modul.SHIPPING_NOZ}<p>{$SHIPPING_ZONES_TEXT} <strong>{$modul.SHIPPING_NOZ}</strong></p>{/if}	
+	{if $modul.SHIPPING_HANDLING}<p>{$COUNTRY_SHIPPING_HANDLING_TEXT} <strong>{$modul.SHIPPING_HANDLING}</strong></p>{/if}	
+	{*if $modul.SHIPPING_ALLOWED}<p>{$COUNTRY_SHIPPING_ALLOWED_TEXT}<br /><strong>{$modul.SHIPPING_ALLOWED}</strong></p>{/if*}	
+    <br />
+    {foreach key=key_data item=item_data from=$modul.SHIPPING_MODUL}
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    	<tr style="background-color:silver;">
+    		<td colspan="2"><h3>{$item_data.SHIPPING_ZONE}</h3></td>
+    	</tr>
+    	<tr style="background-color:silver;">
+    		<td style="width:60%"><strong>{$COUNTRY_SHIPPING_TEXT}</strong></td>
+    		<td style="width:40%"><strong>{$COUNTRY_COST_TEXT}</strong></td>
+    	</tr>
+    	<tr>
+    		<td valign="top">
+    			{$item_data.COUNTRIES}
+    		</td>
+    		<td valign="top">
+    			<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    				{$item_data.WEIGHT_COST}
+    			</table>
+    		</td>
+    	</tr>
+    </table><br />
+    {/foreach}
+<br style="clear:both;" />
+{/foreach}
+{/if}
