@@ -17,7 +17,7 @@
   // new Smarty instance
   $content_smarty = new Smarty;
 
-  // get intsalled shipping modules
+  // get installed shipping modules
   $ship_modules = explode(';', MODULE_SHIPPING_INSTALLED);
   $exclude_array = array('.php', 'dpd', 'selfpickup', 'productsfreeshipping', 'freeshipping');
   $ship_modules = str_replace($exclude_array, '', $ship_modules);
@@ -44,7 +44,7 @@
   	  $active_query = xtc_db_query("SELECT configuration_value FROM ".TABLE_CONFIGURATION." WHERE configuration_key = 'MODULE_SHIPPING_".$shipping_array[$w]."_STATUS'");
   	  $active = xtc_db_fetch_array($active_query);
   	
-	  if($active['configuration_value'] == 'True' || $active['configuration_value'] == 'true') {
+	  if ($active['configuration_value'] == 'True' || $active['configuration_value'] == 'true') {
 		
 		$content_smarty->assign('MODUL_ACTIVE', '1');
 		
@@ -105,6 +105,8 @@
 			  $cost1_table = preg_split("/[:,]/", $cost1['configuration_value']);
 			  $cost2_table = preg_split("/[:,]/", $cost2['configuration_value']);
 			  $cost3_table = preg_split("/[:,]/", $cost3['configuration_value']);
+		  } elseif ($shipping_array[$w] == 'dhl') {
+			  /* SPECIAL QUERIES FOR DHL SHIPPING MODULE */
 		  } else {
 			  $cost_query = xtc_db_query("SELECT configuration_value FROM ".TABLE_CONFIGURATION." WHERE configuration_key = 'MODULE_SHIPPING_".$shipping_array[$w]."_COST_".$i."'");
 			  $cost = xtc_db_fetch_array($cost_query);
@@ -143,6 +145,8 @@
 					$b++;	
 				  }
 			  }
+		  } elseif ($shipping_array[$w] == 'dhl') {
+			  /* HTML OUTPUT FOR DHL SHIPPING MODULE */
 		  } else {
 			  for($b=0; $b < count($cost_table); $b++){
 				$new_weight_cost_list .= '<tr>
